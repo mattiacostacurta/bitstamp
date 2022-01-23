@@ -12,6 +12,7 @@ def get_price_chart(value):
     df = pd.DataFrame(file_json)
     df.to_csv (r"Price.csv", index = False, header=True)
     price_df = pd.read_csv("Price.csv")
+    price_df = price_df.sort_values(by=['date'], ascending=True)
     
     """The dataframe expresses data and time using timestamp. We want to convert it in simply date and 
     time and put them in different columns, to better manage data."""
