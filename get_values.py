@@ -37,20 +37,18 @@ def create_table(df):
         return True
 
 
-def get_price():
+def read_csv(input):
     df = pd.read_csv('CryptoTable.csv')
-    last_price = df._get_value(0, 'last')
-    return last_price
-
-
-def get_volume():
-    df = pd.read_csv('CryptoTable.csv')
-    volume = df._get_value(0, 'volume')
-    return volume
-
-
-def get_change():
-    df = pd.read_csv('CryptoTable.csv')
-    open_price = df._get_value(0, 'open')
-    last_price = df._get_value(0, 'last')
-    return (last_price-open_price)/last_price*1004
+    if input == "last":
+        last_price = df._get_value(0, 'last')
+        return round(last_price, 2)
+    elif input == "volume":
+        volume = df._get_value(0, 'volume')
+        return round(volume, 2)
+    elif input == "change":
+        open_price = df._get_value(0, 'open')
+        last_price = df._get_value(0, 'last')
+        return round((last_price-open_price)/last_price*100, 2)
+    else:
+        print('The input typed is not supported')
+        return None
