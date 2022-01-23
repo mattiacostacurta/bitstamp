@@ -94,3 +94,25 @@ class TestCsvFile(unittest.TestCase):
         with respect to the original csv created (CryptoTable)
         '''
         self.assertTrue(os.stat("Example2.csv").st_size != os.stat("CryptoTable.csv").st_size)
+
+class TestCreateTable(unittest.TestCase):
+    #valid input
+    def test_valid_create_table(self):
+        self.data = {'high': 42865.80, 'last': 42047.32, 'timestamp': 1642502504, 
+            'bid': 42035.75, 'vwap': 42146.43, 'volume': 1077.71980924, 
+            'low': 41482.63, 'ask': 42050.46, 'open': 42230.09}  
+        self.df = pd.DataFrame(self.data, index=[0])
+        self.assertTrue(create_table(self.df))
+
+    #invalid input
+    def test_invalid_create_table(self):
+        empty_df = pd.DataFrame()
+        data = {'high': 42865.80, 'last': 42047.32}
+        df_2_columns = pd.DataFrame(data, index = [0])
+
+        self.assertFalse(create_table(empty_df))
+        self.assertFalse(create_table(df_2_columns))
+
+    #corner case
+    def test_None_create_table(self):
+        self.assertFalse(create_table(None))
