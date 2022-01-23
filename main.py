@@ -1,8 +1,3 @@
-from bitstamp import get_price
+from get_values import create_table
 
-eur=get_price("btceur")
-print("Last bitcoin price in EUR is: {}".format(eur))
-dollar=get_price("btcusd")
-print("Last bitcoin price in $ is: {}".format(dollar))
-
-
+create_table(“btcusd”)
