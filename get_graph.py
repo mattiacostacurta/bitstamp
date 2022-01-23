@@ -1,4 +1,4 @@
-from prep_graph import get_data, convert_table_graph, date_adjustment, get_price_chart
+from prep_graph import get_file, convert_table_graph, date_adjustment, get_price_chart
 
 def print_graph(chosen_curr):
     if isinstance(get_file(chosen_curr), str):

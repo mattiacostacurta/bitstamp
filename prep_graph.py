@@ -38,19 +38,19 @@ def date_adjustment(df):
     """The dataframe expresses data and time using timestamp. We want to convert it in simply date and 
     time and put them in different columns, to better manage data."""
     dates = []
-    for date in price_df["date"]:
+    for date in df["date"]:
         date = int(date)  
         date = datetime.fromtimestamp(date).strftime("%d-%m-%Y %H:%M:%S")
         dates.append(date)
-    price_df["Date and time"] = dates
-    price_df[['Date', 'Time']] = price_df['Date and time'].str.split(' ', n=1, expand=True)
-    price_df = price_df.drop(["Date and time", "date"], axis = 1)
+    df["Date and time"] = dates
+    df[['Date', 'Time']] = df['Date and time'].str.split(' ', n=1, expand=True)
+    df = df.drop(["Date and time", "date"], axis = 1)
     return df
 
 def get_price_chart(df, chosen_curr):
     """Since the graph will display an entire hour of variation of prices, minute by minute, we want to
     select only some important time-references to make the graph more readable."""
-    timing = price_df["Time"].tolist()
+    timing = df["Time"].tolist()
     time_values =[] 
 
     if len(df)<15: 
@@ -59,12 +59,11 @@ def get_price_chart(df, chosen_curr):
         # division for 6, we want to consider more or less every 10 minutes
         for n in range (0, len(df), int(len(df)/6)):
             time_values.append(timing[n])
-        date=price_df["Date"][0]
+        date=df["Date"][0]
     
         plot = plt.figure(figsize=(15, 7))
-        plot = plt.plot("Time","price", data=price_df)
+        plot = plt.plot("Time","price", data=df)
         plot = plt.title("Last hour " + chosen_curr.upper() + " price | "+ date)
-        plot = plt.title("Price of " + value + " for "+ date)
         plot = plt.xticks(time_values, time_values)
         plot = plt.show()
         return plot
