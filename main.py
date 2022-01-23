@@ -21,7 +21,15 @@ parser.add_argument("-sd","--specific_data", help="Specify which information you
 args = parser.parse_args()
 
 value = args.crypto + "eur"
-create_table(value)
+
+df = pd.DataFrame()
+df = request_API(value)
+
+if not create_table(df):
+    sys.exit()
+else:
+    create_table(df)
+
 
 if args.currency != "eur":
     convert_table(args.currency)

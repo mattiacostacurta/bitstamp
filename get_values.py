@@ -6,11 +6,13 @@ import pandas as pd
 bitstamp_URL = 'https://www.bitstamp.net/api/v2/ticker/%s/'
 
 
-def create_table(value):
+def request_API(value):
     r = requests.get(bitstamp_URL % value)
-    file_json = json.loads(r.text)
-    df = pd.DataFrame(file_json, index=[0])
-    df.to_csv (r'CryptoTable.csv', index = False, header=True)
+    if r.status_code == 200:
+        file_json = json.loads(r.text)
+        df = pd.DataFrame(file_json, index=[0])
+        return df
+    return None
 
 
 def get_price():
