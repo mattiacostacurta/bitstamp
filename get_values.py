@@ -55,13 +55,13 @@ def read_csv(input):
     If the input is different from the valid inputs, it returns False
     '''
     df = pd.read_csv('CryptoTable.csv')
-    if input == "last":
+    if input == 'last':
         last_price = df._get_value(0, 'last')
         return round(last_price, 2)
-    elif input == "volume":
+    elif input == 'volume':
         volume = df._get_value(0, 'volume')
         return round(volume, 2)
-    elif input == "change":
+    elif input == 'change':
         open_price = df._get_value(0, 'open')
         last_price = df._get_value(0, 'last')
         return round((last_price-open_price)/last_price*100, 2)
