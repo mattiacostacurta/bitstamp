@@ -15,6 +15,28 @@ def request_API(value):
     return None
 
 
+def create_table(df):
+    '''
+    This function creates a csv file to fetch 
+    data from bitstamp API and store it in a table
+    '''
+    if df is None:
+        print('Error: API request unsuccessful')
+        return False
+    elif df.empty:
+        print('Error: No data available')
+        return False
+    elif df.shape != (1,9):
+        print('Error: Table with different shape')
+        return False
+    #elif df[0]['open'] <= 0 or df[0]['last'] <= 0:
+        #print('Error: Opening and last price less than zero')
+        #return False
+    else:
+        df.to_csv (r'CryptoTable.csv', index = False, header=True)
+        return True
+
+
 def get_price():
     df = pd.read_csv('CryptoTable.csv')
     last_price = df._get_value(0, 'last')
