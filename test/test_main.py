@@ -116,3 +116,37 @@ class TestCreateTable(unittest.TestCase):
     #corner case
     def test_None_create_table(self):
         self.assertFalse(create_table(None))
+
+
+class TestReadCsv(unittest.TestCase):
+    @classmethod
+    def tearDownClass(cls):
+        os.remove('CryptoTable.csv')
+
+    def setUp(self):
+        self.data = {'high': 42865.80, 'last': 42047.32343789, 'timestamp': 1642502504, 
+                'bid': 42035.75, 'vwap': 42146.43, 'volume': 1077.71980924, 
+                'low': 41482.63, 'ask': 42050.46, 'open': 42230.09}  
+        self.df = pd.DataFrame(self.data, index=[0])
+        self.df.to_csv(r'CryptoTable.csv', index = False, header=True)
+
+    #valid case
+    def test_valid_read_csv(self):
+        self.assertEqual(read_csv('last'), round(42047.32343789, 2))
+        self.assertEqual(read_csv('volume'), round(1077.71980924, 2))
+        self.assertEqual(read_csv('change'), round((42047.32-42230.09)/42047.32*100, 2))
+
+    #invalid case
+    def test_invalid_read_csv(self):
+        self.assertEqual(read_csv(1), None)
+        self.assertEqual(read_csv(''), None)
+        self.assertEqual(read_csv({}), None)
+        self.assertEqual(read_csv(True), None)
+
+    #corner case
+    def test_blank_read_csv(self):
+        self.assertEqual(read_csv(None), None)
+
+
+if __name__ == '__main__':
+    unittest.main()
