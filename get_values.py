@@ -15,20 +15,40 @@ def request_API(value):
     return None
 
 
-def get_price():
+def create_table(df):
+    '''
+    This function creates a csv file to fetch 
+    data from bitstamp API and store it in a table
+    '''
+    if df is None:
+        print('Error: API request unsuccessful')
+        return False
+    elif df.empty:
+        print('Error: No data available')
+        return False
+    elif df.shape != (1,9):
+        print('Error: Table with different shape')
+        return False
+    #elif df[0]['open'] <= 0 or df[0]['last'] <= 0:
+        #print('Error: Opening and last price less than zero')
+        #return False
+    else:
+        df.to_csv (r'CryptoTable.csv', index = False, header=True)
+        return True
+
+
+def read_csv(input):
     df = pd.read_csv('CryptoTable.csv')
-    last_price = df._get_value(0, 'last')
-    return last_price
-
-
-def get_volume():
-    df = pd.read_csv('CryptoTable.csv')
-    volume = df._get_value(0, 'volume')
-    return volume
-
-
-def get_change():
-    df = pd.read_csv('CryptoTable.csv')
-    open_price = df._get_value(0, 'open')
-    last_price = df._get_value(0, 'last')
-    return (last_price-open_price)/last_price*1004
+    if input == "last":
+        last_price = df._get_value(0, 'last')
+        return round(last_price, 2)
+    elif input == "volume":
+        volume = df._get_value(0, 'volume')
+        return round(volume, 2)
+    elif input == "change":
+        open_price = df._get_value(0, 'open')
+        last_price = df._get_value(0, 'last')
+        return round((last_price-open_price)/last_price*100, 2)
+    else:
+        print('The input typed is not supported')
+        return None
