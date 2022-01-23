@@ -6,14 +6,16 @@ from datetime import datetime
 
 bitstamp_URL = "https://www.bitstamp.net/api/v2/transactions/%s/"
 
-def get_price_chart(value): 
+def get_file(value):
     r = requests.get(bitstamp_URL % value)
     file_json = json.loads(r.text)
     df = pd.DataFrame(file_json)
     df.to_csv (r"Price.csv", index = False, header=True)
     price_df = pd.read_csv("Price.csv")
     price_df = price_df.sort_values(by=['date'], ascending=True)
-    
+    return price_df
+
+def date_adjustment(df):
     """The dataframe expresses data and time using timestamp. We want to convert it in simply date and 
     time and put them in different columns, to better manage data."""
     dates = []
@@ -24,18 +26,21 @@ def get_price_chart(value):
     price_df["Date and time"] = dates
     price_df[['Date', 'Time']] = price_df['Date and time'].str.split(' ', n=1, expand=True)
     price_df = price_df.drop(["Date and time", "date"], axis = 1)
-    
+    return(df)
+
+def get_price_chart(df, value):
     """Since the graph will display an entire hour of variation of prices, minute by minute, we want to
     select only some important time-references to make the graph more readable."""
     timing = price_df["Time"].tolist()
     time_values =[] 
     # division for 6, we want to consider more or less every 10 minutes
-    for n in range (0, len(price_df)+1, int(len(price_df)/6)):
+    for n in range (0, len(df), int(len(df)/6)):
         time_values.append(timing[n])
     date=price_df["Date"][0]
     
     plot = plt.figure(figsize=(15, 7))
     plot = plt.plot("Time","price", data=price_df)
+    plot = plt.title("Last hour " + value.upper() + " price | "+ date)
     plot = plt.title("Price of " + value + " for "+ date)
     plot = plt.xticks(time_values, time_values)
     plot = plt.show()
