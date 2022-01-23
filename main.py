@@ -16,7 +16,23 @@ currency_list = [ "usd", "jpy", "bgn", "cyp", "czk", "dkk", "eek", "gbp", "huf",
 parser.add_argument("crypto", help="Specify the cryptocurrency code", choices = crypto_list)
 parser.add_argument("currency", help="Specify the currency code", choices = currency_list)
 parser.add_argument("-sd","--specific_data", help="Specify which information you want to know", choices=["price", "volume", "change", "chart"])
-args = parser.parse_args()
-print(args.crypto, args.currency, args.specific_data)
 
-create_table(“btcusd”)
+
+args = parser.parse_args()
+
+value = args.crypto + args.currency #Concatenate value for API
+create_table(value)
+
+if args.specific_data == "price":
+    print("{} value in {} is {}".format(args.crypto, args.currency, get_price()))
+elif args.specific_data == "volume":
+    print("{} 24h volume is {}".format(args.crypto, get_volume()))
+elif args.specific_data == "change":
+    print("{} daily change is {} %".format(args.crypto, get_change()))
+elif args.specific_data == "chart":
+    get_price_chart(currency="btcusd")
+else:
+    print("{} value in {} is {}".format(args.crypto, args.currency, get_price()))
+    print("{} 24h volume is {}".format(args.crypto, get_volume()))
+    print("{} daily change is {} %".format(args.crypto, get_change()))
+    get_price_chart(currency="btcusd")
