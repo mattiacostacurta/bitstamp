@@ -14,10 +14,14 @@ def get_file(chosen_curr):
     r = requests.get(bitstamp_URL % n_val)
     file_json = json.loads(r.text)
     df = pd.DataFrame(file_json)
-    df.to_csv (r"Price.csv", index = False, header=True)
-    price_df = pd.read_csv("Price.csv")
-    price_df = price_df.sort_values(by=['date'], ascending=True)
-    return price_df
+
+    if len(df)==0:
+        return "No data available"
+    else:
+        df.to_csv (r"Price.csv", index = False, header=True)
+        price_df = pd.read_csv("Price.csv")
+        price_df = price_df.sort_values(by=['date'], ascending=True)
+        return price_df
 
 def convert_table_graph(df, chosen_curr):
     output_currency = chosen_curr[-3:]
@@ -48,15 +52,19 @@ def get_price_chart(df, chosen_curr):
     select only some important time-references to make the graph more readable."""
     timing = price_df["Time"].tolist()
     time_values =[] 
-    # division for 6, we want to consider more or less every 10 minutes
-    for n in range (0, len(df), int(len(df)/6)):
-        time_values.append(timing[n])
-    date=price_df["Date"][0]
+
+    if len(df)<15: 
+        print("Not enough data to display a meaningful chart.")
+    else:
+        # division for 6, we want to consider more or less every 10 minutes
+        for n in range (0, len(df), int(len(df)/6)):
+            time_values.append(timing[n])
+        date=price_df["Date"][0]
     
-    plot = plt.figure(figsize=(15, 7))
-    plot = plt.plot("Time","price", data=price_df)
-    plot = plt.title("Last hour " + chosen_curr.upper() + " price | "+ date)
-    plot = plt.title("Price of " + value + " for "+ date)
-    plot = plt.xticks(time_values, time_values)
-    plot = plt.show()
-    return plot
+        plot = plt.figure(figsize=(15, 7))
+        plot = plt.plot("Time","price", data=price_df)
+        plot = plt.title("Last hour " + chosen_curr.upper() + " price | "+ date)
+        plot = plt.title("Price of " + value + " for "+ date)
+        plot = plt.xticks(time_values, time_values)
+        plot = plt.show()
+        return plot
