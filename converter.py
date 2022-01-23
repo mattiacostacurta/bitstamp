@@ -23,6 +23,6 @@ def convert_table(output_currency):
    values such as opening price and last price
    '''
    df = pd.read_csv('CryptoTable.csv')
-   df['last'] = converter(df._get_value(0, 'last'), "usd", output_currency)
-   df['open'] = converter(df._get_value(0, 'open'), "usd", output_currency)
+   df['last'] = conversion(df._get_value(0, 'last'), "usd", output_currency)
+   df['open'] = conversion(df._get_value(0, 'open'), "usd", output_currency)
    df.to_csv (r'CryptoTable.csv', index = False, header=True)

@@ -23,7 +23,7 @@ parser.add_argument("-sd","--specific_data", help="Specify which information you
 
 args = parser.parse_args()
 
-value = args.crypto + args.currency #Concatenate value for API
+value = args.crypto + "usd"
 create_table(value)
 
 if args.currency != "usd":
