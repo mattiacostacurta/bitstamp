@@ -25,3 +25,4 @@ def convert_table(output_currency):
    df['last'] = conversion(df._get_value(0, 'last'), output_currency)
    df['open'] = conversion(df._get_value(0, 'open'), output_currency)
    df.to_csv (r'CryptoTable.csv', index = False, header=True)
+   
