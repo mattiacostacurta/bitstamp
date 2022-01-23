@@ -6,8 +6,8 @@ from datetime import datetime
 
 bitstamp_URL = "https://www.bitstamp.net/api/v2/transactions/%s/"
 
-def get_price_chart(currency="btcusd"):
-    r = requests.get(bitstamp_URL % currency)
+def get_price_chart(value): 
+    r = requests.get(bitstamp_URL % value)
     file_json = json.loads(r.text)
     df = pd.DataFrame(file_json)
     df.to_csv (r"Price.csv", index = False, header=True)
@@ -35,7 +35,7 @@ def get_price_chart(currency="btcusd"):
     
     plot = plt.figure(figsize=(15, 7))
     plot = plt.plot("Time","price", data=price_df)
-    plot = plt.title("Price of " + "btcusd"+ " for "+ date)
+    plot = plt.title("Price of " + value + " for "+ date)
     plot = plt.xticks(time_values, time_values)
     plot = plt.show()
     return plot
