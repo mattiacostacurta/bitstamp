@@ -21,7 +21,7 @@ def get_price_chart(value):
         date = datetime.fromtimestamp(date).strftime("%d-%m-%Y %H:%M:%S")
         dates.append(date)
     price_df["Date and time"] = dates
-    price_df['Date'], price_df['Time'] = price_df['Date and time'].str.split(' ', 1).str
+    price_df[['Date', 'Time']] = price_df['Date and time'].str.split(' ', n=1, expand=True)
     price_df = price_df.drop(["Date and time", "date"], axis = 1)
     
     """Since the graph will display an entire hour of variation of prices, minute by minute, we want to
