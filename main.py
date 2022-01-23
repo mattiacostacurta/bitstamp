@@ -1,8 +1,10 @@
-from bitstamp import get_price
+from get_values import create_table
+import argparse
 
-eur=get_price("btceur")
-print("Last bitcoin price in EUR is: {}".format(eur))
-dollar=get_price("btcusd")
-print("Last bitcoin price in $ is: {}".format(dollar))
-
+parser = argparse.ArgumentParser()
+parser.add_argument("crypto")
+parser.add_argument("currency")
+parser.add_argument("-sd","--specific_data")
+args = parser.parse_args()
+print(args.crypto, args.currency, args.specific_data)
 
