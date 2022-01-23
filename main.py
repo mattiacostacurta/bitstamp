@@ -1,4 +1,5 @@
 from get_values import create_table, get_price, get_volume, get_change
+from converter import conversion, convert_table
 import argparse
 
 parser = argparse.ArgumentParser()
@@ -22,6 +23,9 @@ args = parser.parse_args()
 
 value = args.crypto + args.currency #Concatenate value for API
 create_table(value)
+
+if args.currency != "usd":
+    convert_table(args.currency)
 
 if args.specific_data == "price":
     print("{} value in {} is {}".format(args.crypto, args.currency, get_price()))
