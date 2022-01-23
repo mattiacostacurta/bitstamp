@@ -96,8 +96,16 @@ class TestCsvFile(unittest.TestCase):
         self.assertTrue(os.stat("Example2.csv").st_size != os.stat("CryptoTable.csv").st_size)
 
 class TestCreateTable(unittest.TestCase):
+    '''
+    This class will test the create_table function,
+    when it receives different values as inputs.
+    '''
     #valid input
     def test_valid_create_table(self):
+        '''
+        This test checks wether the function works correctly when it receive 
+        as input a correct dataframe (with the same columns and data type)
+        '''
         self.data = {'high': 42865.80, 'last': 42047.32, 'timestamp': 1642502504, 
             'bid': 42035.75, 'vwap': 42146.43, 'volume': 1077.71980924, 
             'low': 41482.63, 'ask': 42050.46, 'open': 42230.09}  
@@ -106,6 +114,10 @@ class TestCreateTable(unittest.TestCase):
 
     #invalid input
     def test_invalid_create_table(self):
+        '''
+        This test checks wether the function returns False when it receive 
+        as input an invalid dataframe (with different columns or empty)
+        '''
         empty_df = pd.DataFrame()
         data = {'high': 42865.80, 'last': 42047.32}
         df_2_columns = pd.DataFrame(data, index = [0])
@@ -115,15 +127,31 @@ class TestCreateTable(unittest.TestCase):
 
     #corner case
     def test_None_create_table(self):
+        '''
+        This test checks wether the function returns False when it receive 
+        as input None (if API request is unsuccesfull, it will return None)
+        '''
         self.assertFalse(create_table(None))
 
 
 class TestReadCsv(unittest.TestCase):
+    '''
+    This class will test the read_csv function,
+    when it receives different values as inputs.
+    '''
     @classmethod
     def tearDownClass(cls):
+        '''
+        This class is used to remove csv files
+        created with the setUp function after
+        all tests of this class are run
+        '''
         os.remove('CryptoTable.csv')
 
     def setUp(self):
+        '''
+        This function creates a mock csv with correct data
+        '''
         self.data = {'high': 42865.80, 'last': 42047.32343789, 'timestamp': 1642502504, 
                 'bid': 42035.75, 'vwap': 42146.43, 'volume': 1077.71980924, 
                 'low': 41482.63, 'ask': 42050.46, 'open': 42230.09}  
@@ -132,12 +160,20 @@ class TestReadCsv(unittest.TestCase):
 
     #valid case
     def test_valid_read_csv(self):
+        '''
+        This test checks wether the function returns correct values when it 
+        receive valid inputs
+        '''
         self.assertEqual(read_csv('last'), round(42047.32343789, 2))
         self.assertEqual(read_csv('volume'), round(1077.71980924, 2))
         self.assertEqual(read_csv('change'), round((42047.32-42230.09)/42047.32*100, 2))
 
     #invalid case
     def test_invalid_read_csv(self):
+        '''
+        This test checks wether the function returns None when it 
+        receive invalid inputs
+        '''
         self.assertEqual(read_csv(1), None)
         self.assertEqual(read_csv(''), None)
         self.assertEqual(read_csv({}), None)
@@ -145,6 +181,10 @@ class TestReadCsv(unittest.TestCase):
 
     #corner case
     def test_blank_read_csv(self):
+        '''
+        This test checks wether the function returns None when it 
+        receive None as input
+        '''
         self.assertEqual(read_csv(None), None)
 
 
