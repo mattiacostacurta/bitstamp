@@ -81,7 +81,7 @@ def convert_table_graph(df, chosen_curr):
     if output_currency != 'eur':
         new_list = []
         for el in df['price']:
-            new_el = round((conversion(el, output_currency)), 2)
+            new_el = round((conversion(el, 'EUR', output_currency)), 2)
             new_list.append(new_el)
         df['price'] = new_list
     return df
