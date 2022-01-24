@@ -37,7 +37,7 @@ If these libraries/modules are not already installed in your pc, you can install
 
 For example: 
 ```bash
-pip install 'library name'
+pip install 'library/module name'
 ```
 
 ## Usage
@@ -56,33 +56,35 @@ The list of all the availbale FIAT currencies is:
 'usd', 'jpy', 'bgn', 'cyp', 'czk', 'dkk', 'eek', 'gbp', 'huf', 'ltl', 'lvl', 'mtl', 'pln', 'rol', 'ron', 'sek', 'sit', 'skk', 'chf', 'isk', 'nok', 'hrk', 'rub', 'trl', 'try', 'aud', 'brl', 'cad', 'cny', 'hkd', 'idr', 'ils', 'inr', 'krw', 'mxn', 'myr', 'nzd', 'php', 'sgd', 'thb', 'zar'
 ```
 
-In case both codes are correct, the program will perform *all* its functionalities through `main.py`. Indeed, the functions  `request_API`, `
+*Please note:* the default currency is **eur**.
+
+In case both codes are correct, the program will perform all its functionalities through `main.py`. Indeed, the functions  `request_API`, `
 create_table`, `read_csv` in the module `get_values.py` and all those inside the module `get_graph.py` are recalled inside it, as well as the ArgParse which stores the user inputs.  
 
 So, if wanting the execute the program, the command should be written as follows:
 ```bash
-python ./main.py 'cryptocurrency' 'currency'
+python3 ./main.py 'cryptocurrency' 'currency'
 ``` 
 
-*Please note:* the program does *not* work unless the user inputs the currency codes he/she wants to convert.
+*Please note:* the program does **not** work unless the user inputs the currency codes he/she wants to convert.
 
 For example: 
 ```bash
-python ./main.py btc eur
+python3 ./main.py btc eur
 ```
 
 In case the user is interested in a single data, he/she can add to the inputted currencies `-sd` or `--specific data` and the name of the specific functionality.
 
 Using this command:
 ```bash
-python ./main.py btc usd -sd 'functionality'
+python3 ./main.py btc usd -sd 'functionality'
 ``` 
 
-The list of all the available functionalities are: `price`, `volume`, `'change'` and `'chart'`. 
+The list of all the available functionalities are: `price`, `volume`, `change` and `chart`. 
 
-For example by writing:
+For example:
 ```bash
-python ./main.py btc eur -sd price
+python3 ./main.py btc eur -sd price
 ```
 
 The result:
@@ -92,12 +94,12 @@ BTC EUR : 30891.74
 
 By default, if the user doesn’t specify which kind of data to get from the program, the latter returns all the possible information about the inputted cross (e.g. btc eur), included the price, the 24 hours % change and average volume, and the graph of the last hour.
 
-For example by writing:
+For example:
 ```bash
-python ./main.py btc eur
+python3 ./main.py btc eur
 ```
 
-The output will be:
+The result:
 ```bash
 BTC EUR
 Price:  30891.74
@@ -114,10 +116,10 @@ Another optional argument is `-v` or `--verbose`. This can be used if the user w
 
 For example: 
 ```bash
-python ./main.py btc eur -v
+python3 ./main.py btc eur -v
 ```
 
-The output will be: 
+The result: 
 ```bash
 You have selected to see BTC cryptocurrency in EUR
 BTC last price in EUR is 30891.74
@@ -128,10 +130,12 @@ BTC daily change is -3.57  %
 
 The last optional argument is `-h` or `--help`, that gives the user some help about the functioning and the rules of the code.
 
-So, at the end, the command can be:
+For example:
 ```bash
-python ./main.py 'cryptocurrency' 'currency' '[-h]' '[-sd {price,volume,change,chart}]' '[-v]'
+python3 ./main.py btc eur -h
 ```
+
+The result:
 ```bash
 Positional arguments:
 {btc,eth,gbp,ada,xrp,uni,ltc,link,matic,xlm,ftt,bch,aave,axs,algo,comp,snx,hbar,chz,cel,enj,bat,mkr,zrx,audio,skl,yfi,sushi,alpha,storj,sxp,grt,uma,omg,knc,crv,sand,fet,rgt,slp,eurt,usdt,usdc,pax}
@@ -147,7 +151,7 @@ Optional arguments:
 
 ## Running Tests 
 
-In the folder Tests the user can find the tests performed about the main functions,  to run all of  them is necessary  to run the command as follows:
+In the folder `Tests` the user can find the tests performed over the main functions, and in order to run all of them is necessary to run the command as follows:
 ```bash
 python3 -m unittest -v -b tests/test_main.py
 ```
