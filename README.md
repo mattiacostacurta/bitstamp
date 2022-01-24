@@ -25,7 +25,6 @@ Moreover, some additional libraries/modules are required to run our project on t
 - request 
 - pandas
 - argparse
-- csv
 - matplotlib.pyplot
 - currencyconverter
 - datetime, 
@@ -47,7 +46,7 @@ Pay attention some of them may require slightly different commands, search for t
 For example: 
 
 ```bash
-pip install --user currencyconverter
+pip install currencyconverter
 ```
 
 ## Usage
@@ -58,16 +57,16 @@ Once a pair of `cryptocurrency` and `currency` is entered, the program checks if
 
 The list of all the available crypto currencies is: 
 ```bash
-['btc', 'eth', 'gbp', 'ada' , 'xrp', 'uni', 'ltc', 'link', 'matic', 'xlm', 'ftt', 'bch', 'aave', 'axs', 'algo', 'comp', 'snx', 'hbar', 'chz', 'cel', 'enj', 'bat', 'mkr', 'zrx', 'audio', 'skl', 'yfi' , 'sushi', 'alpha', 'storj', 'sxp', 'grt', 'uma', 'omg', 'knc', 'crv', 'sand', 'fet', 'rgt', 'slp', 'eurt', 'usdt', 'usdc', 'pax']
+'btc', 'eth', 'gbp', 'ada' , 'xrp', 'uni', 'ltc', 'link', 'matic', 'xlm', 'ftt', 'bch', 'aave', 'axs', 'algo', 'comp', 'snx', 'hbar', 'chz', 'cel', 'enj', 'bat', 'mkr', 'zrx', 'audio', 'skl', 'yfi' , 'sushi', 'alpha', 'storj', 'sxp', 'grt', 'uma', 'omg', 'knc', 'crv', 'sand', 'fet', 'rgt', 'slp', 'eurt', 'usdt', 'usdc', 'pax'
 ```
 
 The list of all the availbale FIAT currencies is: 
 ```bash
-['usd', 'jpy', 'bgn', 'cyp', 'czk', 'dkk', 'eek', 'gbp', 'huf', 'ltl', 'lvl', 'mtl', 'pln', 'rol', 'ron', 'sek', 'sit', 'skk', 'chf', 'isk', 'nok', 'hrk', 'rub', 'trl', 'try', 'aud', 'brl', 'cad', 'cny', 'hkd', 'idr', 'ils', 'inr', 'krw', 'mxn', 'myr', 'nzd', 'php', 'sgd', 'thb', 'zar']
+'usd', 'jpy', 'bgn', 'cyp', 'czk', 'dkk', 'eek', 'gbp', 'huf', 'ltl', 'lvl', 'mtl', 'pln', 'rol', 'ron', 'sek', 'sit', 'skk', 'chf', 'isk', 'nok', 'hrk', 'rub', 'trl', 'try', 'aud', 'brl', 'cad', 'cny', 'hkd', 'idr', 'ils', 'inr', 'krw', 'mxn', 'myr', 'nzd', 'php', 'sgd', 'thb', 'zar'
 ```
 
-In case both codes are correct, the program will perform *all* its functionalities through `main.py`. Indeed, the functions  `request_API`, `
-create_table`, `read_csv` *******TO BE FIXED****** in the module `get_values.py` and all those inside the module `get_graph.py` are recalled inside it, as well as the ArgParse which stores the user inputs.  
+In case both codes are correct, the program will perform **all** its functionalities through `main.py`. Indeed, the functions  `request_API`, `
+create_table`, `read_csv` **TO BE FIXED** in the module `get_values.py` and all those inside the module `get_graph.py` are recalled inside it, as well as the ArgParse which stores the user inputs.  
 
 So, if wanting the execute the program, the command should be written as follows:
 
@@ -91,7 +90,7 @@ Using this command:
 python ./main.py btc usd -sd 'functionality'
 ``` 
 
-The list of all the available functionalities are: `'price'`, `'volume'`, `'change'` and `'chart'`. 
+The list of all the available functionalities are: `price`, `volume`, `'change'` and `'chart'`. 
 
 For example by writing:
 
@@ -102,7 +101,7 @@ python ./main.py btc eur -sd price
 The result:
 
 ```bash
-BTC EUR :  12234324,232
+BTC EUR :  30891.74
 ```
 
 By default, if the user doesn’t specify which kind of data to get from the program, the latter returns all the possible information about the inputted cross (e.g. btc eur), included the price, the 24 hours % change and average volume, and the graph of the last hour.
@@ -124,8 +123,62 @@ Change:  -3.57  %
 
 ![btceur](btceur.jpg)
 
-*Please note:* wait some seconds in order to let the program convert all values into the desired currency and ultimately return the line chart.
+**Please note:** wait some seconds in order to let the program convert all values into the desired currency and ultimately return the line chart.
 
-In case the program returns `'No data available'` or `'Not enough data to display a meaningful chart'` it means respectively that there is no data provided by the API or that there is not enough data provided by the API.
+In case the program returns `'No data available'` or `'Not enough data to display a meaningful chart'` it means respectively that there is no data or not enough data provided by the API to properly display the graph.
 
+Another optional argument is `-v` or `--verbose`. This can be used if the user wants to print a more detailed description of the output.
 
+For example: 
+
+```bash
+python ./main.py btc eur -v
+```
+
+The output will be: 
+
+```bash
+You have selected to see BTC cryptocurrency in EUR
+BTC last price in EUR is 30891.74
+BTC 24h volume is 1460.39
+BTC daily change is -3.57  %
+```
+
+![btceur](btceur.jpg)
+
+The last optional argument is `-h` or `--help`, that gives the user some help about the functioning and the rules of the code.
+
+So, at the end, the command can be:
+
+```bash
+python ./main.py 'cryptocurrency' 'currency' '[-h]' '[-sd {price,volume,change,chart}]' '[-v]'
+```
+```bash
+Positional arguments:
+{btc,eth,gbp,ada,xrp,uni,ltc,link,matic,xlm,ftt,bch,aave,axs,algo,comp,snx,hbar,chz,cel,enj,bat,mkr,zrx,audio,skl,yfi,sushi,alpha,storj,sxp,grt,uma,omg,knc,crv,sand,fet,rgt,slp,eurt,usdt,usdc,pax}
+		Specify the cryptocurrency code
+{usd,jpy,bgn,cyp,czk,dkk,eek,gbp,huf,ltl,lvl,mtl,pln,rol,ron,sek,sit,skk,chf,isk,nok,hrk,rub,trl,try,aud,brl,cad,cny,hkd,idr,ils,inr,krw,mxn,myr,nzd,php,sgd,thb,zar}
+    Specify the currency code
+
+Optional arguments:
+  -h, --help      show this help message and exit
+  -sd {price,volume,change,chart}, --specific_data {price,volume,change,chart}    Specify which information you want to know
+   -v, --verbose   increase output verbosity 
+```
+
+## Running Tests 
+
+In the folder Tests the user can find the tests performed about the main functions,  to run all of  them is necessary  to run the command as follows:
+```bash
+python3 -m unittest -v -b tests/test_main.py
+```
+
+## Contributing
+
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. 
+
+Please make sure to update tests as appropriate.
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
