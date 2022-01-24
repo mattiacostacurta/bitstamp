@@ -28,7 +28,7 @@ def request_API(value):
 def create_table(df):
     '''
     This function creates a csv file using the previous dataframe.
-    It checks whether the function receives a dataframe in input, 
+    It checks whether the function receives a dataframe in input,
     otherwise it returns False
     '''
     if df is None:
@@ -37,14 +37,11 @@ def create_table(df):
     elif df.empty:
         print('Error: No data available')
         return False
-    elif df.shape != (1,9):
+    elif df.shape != (1, 9):
         print('Error: Table with different shape')
         return False
-    #elif df[0]['open'] <= 0 or df[0]['last'] <= 0:
-        #print('Error: Opening and last price less than zero')
-        #return False
     else:
-        df.to_csv (r'CryptoTable.csv', index = False, header=True)
+        df.to_csv(r'CryptoTable.csv', index=False, header=True)
         return True
 
 
@@ -64,7 +61,7 @@ def read_csv(input):
     elif input == 'change':
         open_price = df._get_value(0, 'open')
         last_price = df._get_value(0, 'last')
-        return round((last_price-open_price)/last_price*100, 2)
+        return round((last_price - open_price) / last_price * 100, 2)
     else:
         print('The input typed is not supported')
         return None

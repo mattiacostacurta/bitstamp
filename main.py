@@ -1,12 +1,12 @@
 '''
-The aim of the project is to retrieve cryptocurrency information from 
+The aim of the project is to retrieve cryptocurrency information from
 bitstamp API and return an output, based on what the user is want to know.
-This is the main code of the software. In this code we combine all function 
+This is the main code of the software. In this code we combine all function
 within different modules in order to performe the software aim.
 '''
 
 from get_values import request_API, create_table, read_csv
-from converter import conversion, convert_table
+from converter import convert_table
 import argparse
 from get_graph import print_graph
 import pandas as pd
@@ -17,7 +17,7 @@ crypto_list = [
     'enj', 'bat', 'mkr', 'zrx', 'audio', 'skl', 'yfi', 'sushi', 'alpha',
     'storj', 'sxp', 'grt', 'uma', 'omg', 'knc', 'crv', 'sand', 'fet', 'rgt',
     'slp', 'eurt', 'usdt', 'usdc', 'pax'
-    ]
+]
 
 currency_list = [
     'eur', 'usd', 'jpy', 'bgn', 'cyp', 'czk', 'dkk', 'eek', 'gbp', 'huf',
@@ -25,13 +25,13 @@ currency_list = [
     'isk', 'nok', 'hrk', 'rub', 'trl', 'try', 'aud', 'brl', 'cad', 'cny',
     'hkd', 'idr', 'ils', 'inr', 'krw', 'mxn', 'myr', 'nzd', 'php', 'sgd',
     'thb', 'zar'
-    ]
+]
 
 '''
-The following chunk of code get the informations from the user through 
+The following chunk of code get the informations from the user through
 argparse method. The user must specify the cryptocurrency code of interest
 and the currency code to be displayed.
-Additionally, "--specific data" (i.e. -sd) is a positional argument that the 
+Additionally, "--specific data" (i.e. -sd) is a positional argument that the
 user can specify in order to return only specific information
 '''
 
