@@ -1,10 +1,15 @@
+'''
+The aim of the project is to retrieve cryptocurrency information from 
+bitstamp API and return an output, based on what the user is want to know.
+This is the main code of the software. In this code we combine all function 
+within different modules in order to performe the software aim.
+'''
+
 from get_values import request_API, create_table, read_csv
 from converter import conversion, convert_table
 import argparse
 from get_graph import print_graph
 import pandas as pd
-
-parser = argparse.ArgumentParser()
 
 crypto_list = [
     'btc', 'eth', 'gbp', 'ada', 'xrp', 'uni', 'ltc', 'link', 'matic', 'xlm',
@@ -22,6 +27,15 @@ currency_list = [
     'thb', 'zar'
     ]
 
+'''
+The following chunk of code get the informations from the user through 
+argparse method. The user must specify the cryptocurrency code of interest
+and the currency code to be displayed.
+Additionally, "--specific data" (i.e. -sd) is a positional argument that the 
+user can specify in order to return only specific information
+'''
+
+parser = argparse.ArgumentParser()
 parser.add_argument(
     'crypto', help='Specify the cryptocurrency code', choices=crypto_list)
 parser.add_argument(
@@ -40,18 +54,21 @@ chosen_curr = args.crypto + args.currency
 # For code purposes by default the chosen currency is EUR
 value = args.crypto + 'eur'
 
+# Collect data from bitstamp API in a dataframe
 df = pd.DataFrame()
 df = request_API(value)
 
+# When the function doen't receive a correct dataframe it stops
 if not create_table(df):
     sys.exit()
 else:
     create_table(df)
 
+# When the currency selected is not Euro the program convert the table
 if args.currency != 'eur':
     convert_table(args.currency)
 
-
+# Print output
 if args.specific_data == 'price':
     if args.verbose:
         print(
@@ -59,7 +76,7 @@ if args.specific_data == 'price':
                 args.crypto.upper(), args.currency.upper(), read_csv('last')))
     else:
         print(
-            args.crypto, args.currency, ':', read_csv('last'))
+            args.crypto.upper(), args.currency.upper(), ':', read_csv('last'))
 elif args.specific_data == 'volume':
     if args.verbose:
         print(
